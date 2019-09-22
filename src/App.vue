@@ -1,17 +1,6 @@
 <template>
     <div id="app">
-        <section class="hero is-primary">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">
-                        Suade Front End Challenge 2019
-                    </h1>
-                    <h2 class="subtitle">
-                        Declan Baldwin
-                    </h2>
-                </div>
-            </div>
-        </section>
+        <hero-section></hero-section>
         <section class="search-section">
             <div class="container">
                 <div class="columns">
@@ -53,7 +42,7 @@
                 </div>
             </div>
         </section>
-        <section class="pagination">
+        <section class="pagination-section">
             <div class="container">
                 <div class="columns">
                     <div class="column is-half">
@@ -103,12 +92,14 @@
 </template>
 
 <script>
+import HeroSection from "./components/HeroSection.vue";
 import SelectedPerson from "./components/SelectedPerson.vue";
 import peopleData from "./assets/people.json";
 
 export default {
     name: "app",
     components: {
+        HeroSection,
         SelectedPerson
     },
     data() {
@@ -157,5 +148,14 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+.search-section, .pagination-section {
+  margin-top: 1rem;
+}
+
+.input {
+  margin-bottom: 0.5rem;
+}
+</style>>
+
+
