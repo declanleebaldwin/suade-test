@@ -6,15 +6,36 @@
                 <div class="columns">
                     <div class="column is-half">
                         <h4 class="title is-4">Select a person for details.</h4>
-                        <input
-                            class="input"
-                            type="text"
-                            placeholder="Search for a person here."
-                            v-model="searchText"
-                        />
-                        <button class="button is-success" @click="searchPeople()">
-                          Search
-                        </button>
+                        <div class="field">
+                            <label class="label">Name</label>
+                            <div class="control">
+                                <input
+                                    class="input"
+                                    type="text"
+                                    placeholder="Search here."
+                                    v-model="searchText"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Gender</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select v-model="gender">
+                                        <option>All</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                                <button
+                                    class="button is-success"
+                                    @click="searchPeople()"
+                                >
+                                    Search
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,22 +130,35 @@ export default {
             currentPage: 0,
             pageSize: 10,
             visiblePeople: [],
-            searchText: '',
-            filterPeople: peopleData
+            searchText: "",
+            filterPeople: peopleData,
+            gender: "All"
         };
     },
     methods: {
         searchPeople() {
             var $this = this;
             this.filterPeople = this.people.filter(function(person) {
-                return (
+                if ($this.gender == "All") {
+                    // only filtering by name
+                    return (
+                        person.name
+                            .toLowerCase()
+                            .indexOf($this.searchText.toLowerCase()) !== -1
+                    );
+                }
+
+                // filtering by name and age
+                if (
                     person.name
                         .toLowerCase()
-                        .indexOf($this.searchText.toLowerCase()) !== -1
-                );
+                        .indexOf($this.searchText.toLowerCase()) !== -1 &&
+                    person.gender.toLowerCase() == $this.gender.toLowerCase()
+                ) {
+                    return true;
+                }
             });
             this.updatePage(0);
-
         },
         updateVisiblePeople() {
             this.visiblePeople = this.filterPeople.slice(
@@ -149,12 +183,17 @@ export default {
 </script>
 
 <style scoped>
-.search-section, .pagination-section {
-  margin-top: 1rem;
+.search-section,
+.pagination-section {
+    margin-top: 1rem;
 }
 
-.input {
-  margin-bottom: 0.5rem;
+.pagination-previous, .pagination-next {
+  cursor: pointer;
+}
+
+.button {
+  margin-left: 1rem;
 }
 </style>>
 

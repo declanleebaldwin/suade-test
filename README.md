@@ -1,6 +1,6 @@
 # Smart Search
 
-## In the root of the project first run
+### In the root of the project first run
 ```
 npm install
 ```
